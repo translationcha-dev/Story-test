@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>聞き流すイヤホン | WEB漫画版</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090c11;
+      --paper: #111821;
+      --panel: #17212d;
+      --ink: #f4f7fb;
+      --muted: #aeb8c6;
+      --line: rgba(210, 226, 245, 0.18);
+      --blue: #7fdcff;
+      --gold: #f3c56b;
+      --danger: #ff6b6b;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(80, 170, 220, 0.16), transparent 34rem),
+        linear-gradient(180deg, #081019 0%, var(--bg) 32rem, #07090d 100%);
+      color: var(--ink);
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .site-header {
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      background-image:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.2) 48%, rgba(0, 0, 0, 0.78)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(9, 12, 17, 0.95)),
+        url("001_10分版_絵コンテ画像/eyecatch_youtube_thumbnail_16x9.png");
+      background-size: cover;
+      background-position: center;
+      padding: clamp(24px, 4vw, 56px);
+    }
+
+    .hero-copy {
+      max-width: 780px;
+      padding-bottom: 7vh;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-size: clamp(0.78rem, 1.6vw, 0.95rem);
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 2px;
+      background: var(--blue);
+      box-shadow: 0 0 18px rgba(127, 220, 255, 0.9);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 9vw, 6.4rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-shadow: 0 6px 26px rgba(0, 0, 0, 0.8);
+    }
+
+    .tagline {
+      margin: 20px 0 0;
+      max-width: 36rem;
+      color: #ecf7ff;
+      font-size: clamp(1.02rem, 2vw, 1.35rem);
+      font-weight: 700;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 18px;
+      border: 1px solid rgba(127, 220, 255, 0.52);
+      border-radius: 8px;
+      background: rgba(8, 19, 29, 0.72);
+      color: var(--ink);
+      font-weight: 700;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, #eaf9ff, #74d8ff);
+      color: #071018;
+      border-color: transparent;
+      box-shadow: 0 12px 40px rgba(92, 203, 255, 0.25);
+    }
+
+    .intro {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 42px clamp(18px, 4vw, 42px) 22px;
+      color: var(--muted);
+    }
+
+    .intro strong {
+      color: var(--ink);
+    }
+
+    .chapter-nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px clamp(14px, 4vw, 32px);
+      border-block: 1px solid var(--line);
+      background: rgba(8, 11, 16, 0.9);
+      backdrop-filter: blur(14px);
+    }
+
+    .chapter-nav a {
+      flex: 0 0 auto;
+      min-width: 42px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .chapter-nav a:hover,
+    .chapter-nav a:focus-visible {
+      color: var(--ink);
+      border-color: rgba(127, 220, 255, 0.8);
+      outline: none;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px clamp(14px, 4vw, 34px) 70px;
+    }
+
+    .scene {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      margin: 0 0 clamp(28px, 6vw, 56px);
+      padding: clamp(12px, 2vw, 18px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(23, 33, 45, 0.96), rgba(11, 16, 24, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .scene img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #0d1218;
+    }
+
+    .scene figcaption {
+      display: grid;
+      gap: 12px;
+    }
+
+    .scene-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .cut-number {
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .duration {
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #d9e9f3;
+    }
+
+    .scene-title {
+      margin: 0;
+      font-size: clamp(1.1rem, 2.2vw, 1.65rem);
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .caption {
+      margin: 0;
+      color: #dce5ef;
+    }
+
+    .narration {
+      margin: 0;
+      color: #c8d4e2;
+    }
+
+    .quote {
+      margin: 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--blue);
+      background: rgba(127, 220, 255, 0.08);
+      color: #f6fbff;
+      font-weight: 700;
+    }
+
+    .product {
+      display: inline-flex;
+      width: fit-content;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(243, 197, 107, 0.14);
+      color: var(--gold);
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
+
+    .turning-point {
+      border-color: rgba(255, 107, 107, 0.46);
+      background: linear-gradient(180deg, rgba(38, 28, 32, 0.96), rgba(11, 16, 24, 0.98));
+    }
+
+    .turning-point .cut-number,
+    .turning-point .quote {
+      color: #ffd8d8;
+      border-left-color: var(--danger);
+    }
+
+    .ending {
+      margin-top: 8px;
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid rgba(127, 220, 255, 0.22);
+      border-radius: 8px;
+      background: #0b1118;
+      text-align: center;
+    }
+
+    .ending p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .ending strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    footer {
+      padding: 28px clamp(18px, 4vw, 42px) 48px;
+      color: #7f8b9b;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (min-width: 860px) {
+      .scene {
+        grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+        align-items: center;
+      }
+
+      .scene:nth-of-type(even) img {
+        order: 2;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .site-header {
+        min-height: 86svh;
+        padding: 18px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      main {
+        padding-inline: 10px;
+      }
+
+      .scene {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="hero-copy">
+      <p class="eyebrow">週刊ストーリーランド風 WEB漫画</p>
+      <h1>聞き流すイヤホン</h1>
+      <p class="tagline">嫌な言葉だけを聞き流したはずだった。けれどイヤホンは、大切な声まで区別しなかった。</p>
+      <div class="header-actions">
+        <a class="button primary" href="#comic">漫画を読む</a>
+        <a class="button" href="#cut-12">商品登場へ</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="intro" aria-label="作品紹介">
+    <p><strong>10分版の絵コンテ画像18枚</strong>を、WEBで読める縦スクロール漫画として再構成しました。各コマには場面説明と音声・ナレーションを添え、画像だけでは伝わりにくい物語の流れも追えるようにしています。</p>
+  </section>
+
+  <nav class="chapter-nav" aria-label="カット移動">
+    <a href="#cut-01">1</a>
+    <a href="#cut-02">2</a>
+    <a href="#cut-03">3</a>
+    <a href="#cut-04">4</a>
+    <a href="#cut-05">5</a>
+    <a href="#cut-06">6</a>
+    <a href="#cut-07">7</a>
+    <a href="#cut-08">8</a>
+    <a href="#cut-09">9</a>
+    <a href="#cut-10">10</a>
+    <a href="#cut-11">11</a>
+    <a href="#cut-12">12</a>
+    <a href="#cut-13">13</a>
+    <a href="#cut-14">14</a>
+    <a href="#cut-15">15</a>
+    <a href="#cut-16">16</a>
+    <a href="#cut-17">17</a>
+    <a href="#cut-18">18</a>
+  </nav>
+
+  <main id="comic">
+    <figure class="scene" id="cut-01">
+      <img src="001_10分版_絵コンテ画像/cut01_call_center_morning.png" alt="朝のコールセンターで謝り続ける修平" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 01</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">誰かの不満を聞く朝</h2>
+        <p class="caption">朝のコールセンター。修平が電話ランプに囲まれて謝り続け、黒い声の塊が周囲に重なる。</p>
+        <p class="narration">川瀬修平の仕事は、毎日どこかで膨らんだ怒りを受け止めることだった。受話器の向こうの声は、商品への不満であり、会社への不信であり、時には修平本人への攻撃にすり替わった。</p>
+        <p class="quote">N: 川瀬修平、三十四歳。彼の一日は誰かの不満を聞くところから始まる。</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-02">
+      <img src="001_10分版_絵コンテ画像/cut02_supervisor_warning.png" alt="会議室で上司に注意される修平" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 02</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">謝るだけでは足りない</h2>
+        <p class="caption">対応履歴の画面を前に、修平が小さく頭を下げる。上司の声だけが重く残る。</p>
+        <p class="narration">修平は誰よりも長く頭を下げられる社員だった。だが、相手の言葉を最後まで聞くことと、ただ嵐が過ぎるのを待つことは違う。上司はそこを見抜いていた。</p>
+        <p class="quote">上司: 「謝るだけじゃなくて記録を残してくれ」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-03">
+      <img src="001_10分版_絵コンテ画像/cut03_home_dining_mika.png" alt="夜の食卓で相談しようとする美香と目を合わせない修平" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 03</span><span class="duration">30秒</span></div>
+        <h2 class="scene-title">聞く余裕のない家</h2>
+        <p class="caption">夜の自宅。美香が病院の相談をしようとするが、修平は目を合わせない。</p>
+        <p class="narration">家に帰っても、修平の耳には昼間の声が残っていた。妻の美香が言葉を選んで話しかけても、修平にはそれが新しい負担のように聞こえてしまう。大事な話ほど、彼は明日に回した。</p>
+        <p class="quote">美香: 「病院のことで、少し相談があるの」 修平: 「明日でいい？」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-04">
+      <img src="001_10分版_絵コンテ画像/cut04_obaasan_notebook_stall.png" alt="駅裏の路地で老婆が聞き流すノートを差し出す" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 04</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">最初の商品</h2>
+        <p class="caption">終電後の駅裏路地。老婆の露店が現れ、古びたノートを差し出す。</p>
+        <p class="narration">その夜、駅裏の路地に見慣れない露店が出ていた。並んでいる品物は古道具のようで、どれも青白い光を内側に隠している。老婆は修平の疲れを、最初から知っていたように微笑んだ。</p>
+        <span class="product">聞き流すノート / 千円</span>
+        <p class="quote">老婆: 「聞き流すノートでございます」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-05">
+      <img src="001_10分版_絵コンテ画像/cut05_notebook_meeting.png" alt="会議中に聞き流すノートから言葉が水のように流れる" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 05</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">要点だけが残る</h2>
+        <p class="caption">会議中、ノートを開くと余計な言葉が水のように流れ、要点だけが浮かぶ。</p>
+        <p class="narration">翌日、修平は半信半疑でノートを開いた。すると、上司の長い注意のうち、嫌味や苛立ちだけが水に溶けるように消えていく。残ったのは、直すべき手順と、記録すべき要点だけだった。</p>
+        <span class="product">聞き流すノート</span>
+        <p class="quote">N: 長い説教の中から、本当に直すべき点だけが残った。</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-06">
+      <img src="001_10分版_絵コンテ画像/cut06_complaint_call_success.png" alt="修平がクレーム電話を落ち着いて処理する" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 06</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">成果が出始める</h2>
+        <p class="caption">修平がクレーム電話を落ち着いて処理し、上司が感心する。ノートは机に置かれている。</p>
+        <p class="narration">効果はすぐに出た。修平は怒鳴り声に飲まれなくなり、相手の要求を冷静に整理できるようになった。周囲は彼を「落ち着いた社員」と呼び始め、修平自身もその評価に救われていった。</p>
+        <span class="product">聞き流すノート</span>
+        <p class="quote">修平: 「要点は三つですね」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-07">
+      <img src="001_10分版_絵コンテ画像/cut07_sleepless_bedroom.png" alt="眠れない修平と戸口に立つ美香" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 07</span><span class="duration">30秒</span></div>
+        <h2 class="scene-title">眠れない夜</h2>
+        <p class="caption">夜の寝室。修平が眠れず、黒い声の塊が天井に漂う。美香が心配そうに戸口に立つ。</p>
+        <p class="narration">だが、聞き流したはずの言葉は、夜になると形を変えて戻ってきた。天井に浮かぶ黒い声の塊を見上げながら、修平は眠ることさえ怖くなっていた。美香の心配も、彼には責められているように聞こえた。</p>
+        <p class="quote">美香: 「ちゃんと相談した方が」 修平: 「大丈夫」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-08">
+      <img src="001_10分版_絵コンテ画像/cut08_obaasan_pillow_stall.png" alt="老婆が聞き流す枕を差し出す" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 08</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">二つ目の商品</h2>
+        <p class="caption">老婆が小さな枕を差し出す。露店の灯りが枕を青白く照らす。</p>
+        <p class="narration">再び路地を訪れた修平に、老婆は今度は枕を差し出した。眠る前の嫌な声を、遠くへ流してくれるという。値段は前より高かったが、修平にはそれが安く思えた。</p>
+        <span class="product">聞き流す枕 / 五千円</span>
+        <p class="quote">老婆: 「聞き流す枕でございます」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-09">
+      <img src="001_10分版_絵コンテ画像/cut09_pillow_sleep_morning.png" alt="聞き流す枕で眠る修平" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 09</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">静かな朝</h2>
+        <p class="caption">枕で眠る修平。黒い声が水音のように遠ざかり、朝の光が差し込む。</p>
+        <p class="narration">枕を使った夜、修平は久しぶりに深く眠った。耳の奥に残っていた怒号は、遠い水音になって消えていく。目覚めた朝、彼は自分が元に戻れたような気さえした。</p>
+        <span class="product">聞き流す枕</span>
+        <p class="quote">N: 修平は久しぶりに、朝まで一度も目を覚まさなかった。</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-10">
+      <img src="001_10分版_絵コンテ画像/cut10_workplace_praise.png" alt="職場で評価される修平と不安そうな村上" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 10</span><span class="duration">30秒</span></div>
+        <h2 class="scene-title">評価と違和感</h2>
+        <p class="caption">職場で評価される修平。村上が尊敬と不安の混じった顔で見ている。</p>
+        <p class="narration">職場での修平は、以前よりずっと有能に見えた。後輩の村上も最初は憧れの目で見ていたが、すぐに小さな違和感を覚える。修平は怒りだけでなく、迷いや不安の声にも反応しなくなっていた。</p>
+        <span class="product">聞き流すノート</span>
+        <p class="quote">N: 修平は、落ち着いた社員として評価され始めた。</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-11">
+      <img src="001_10分版_絵コンテ画像/cut11_hallway_isolation.png" alt="枕を抱えて寝室へ向かう修平と呼び止める美香" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 11</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">背を向ける夫</h2>
+        <p class="caption">自宅で美香が話そうとする。修平は寝室へ向かい、枕を抱えて背を向ける。</p>
+        <p class="narration">美香は何度も話す機会を作ろうとした。けれど修平は、職場で使い切った心を理由に、家庭の声からも距離を取るようになっていた。聞き流す心地よさは、いつの間にか逃げる習慣に変わっていた。</p>
+        <span class="product">聞き流す枕</span>
+        <p class="quote">美香: 「今日こそ少しだけ話せない？」 修平: 「明日早いんだ」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-12">
+      <img src="001_10分版_絵コンテ画像/cut12_obaasan_earbuds_case.png" alt="老婆と修平の手の間に聞き流すイヤホンのケースが光る" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 12</span><span class="duration">40秒</span></div>
+        <h2 class="scene-title">三つ目の商品</h2>
+        <p class="caption">老婆の手と修平の手の間に、青白く光る黒いイヤホンケースが置かれる。</p>
+        <p class="narration">三度目の露店で、修平は自分から商品を求めた。ノートも枕も役に立った。ならば、いつでも嫌な声を遠ざけられるイヤホンは、もっと自分を助けてくれるはずだった。</p>
+        <span class="product">聞き流すイヤホン / 五万円</span>
+        <p class="quote">老婆: 「聞き流すイヤホンでございます」 修平: 「それ、ください」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene" id="cut-13">
+      <img src="001_10分版_絵コンテ画像/cut13_earbuds_call_profile.png" alt="イヤホンをつけた修平の横顔と水泡になる怒鳴り声" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 13</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">怒鳴り声は遠くへ</h2>
+        <p class="caption">イヤホンをつけた修平が電話対応。怒鳴り声が泡のようにぼやけ、修平は穏やかになる。</p>
+        <p class="narration">イヤホンをつけると、世界は驚くほど静かになった。相手の怒鳴り声は泡のように弾け、修平の心には届かない。彼は穏やかな顔で相槌を打ち、自分が強くなったのだと思った。</p>
+        <span class="product">聞き流すイヤホン</span>
+        <p class="quote">N: 怒鳴り声は、遠い水の向こうへ流れていった。</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene turning-point" id="cut-14">
+      <img src="001_10分版_絵コンテ画像/cut14_earbuds_montage.png" alt="美香と村上の声が水音に変わるモンタージュ" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 14</span><span class="duration">40秒</span></div>
+        <h2 class="scene-title">区別しない道具</h2>
+        <p class="caption">美香の相談、病院からの留守電、村上の違和感報告が水音へ変わっていく。</p>
+        <p class="narration">しかしイヤホンは、修平にとって不快かどうかだけで音を選んでいた。美香の不安、病院からの連絡、村上の警告。耳を澄ませば救えたはずの声まで、すべて同じ水音になって流れていった。</p>
+        <span class="product">聞き流すイヤホン</span>
+        <p class="quote">N: イヤホンは、流れていく言葉を区別しなかった。</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene turning-point" id="cut-15">
+      <img src="001_10分版_絵コンテ画像/cut15_major_customer_call.png" alt="大口顧客と村上が必死に訴えるが修平は平然としている" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 15</span><span class="duration">35秒</span></div>
+        <h2 class="scene-title">重大な声まで流れる</h2>
+        <p class="caption">大口顧客の電話。顧客と村上が必死に訴えるが、修平は平然としている。</p>
+        <p class="narration">大口顧客の誤請求は、会社にとって見過ごせない問題だった。村上は必死に修平へ伝えようとしたが、修平にはその焦りがただの騒音にしか聞こえない。彼はいつものように、穏やかに聞き流した。</p>
+        <span class="product">聞き流すイヤホン</span>
+        <p class="quote">顧客: 「誤請求の証拠を確認してほしいんです」 村上: 「こちらのミスです」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene turning-point" id="cut-16">
+      <img src="001_10分版_絵コンテ画像/cut16_meeting_confrontation.png" alt="会議室で責任を問われる修平" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 16</span><span class="duration">30秒</span></div>
+        <h2 class="scene-title">聞いていたのか</h2>
+        <p class="caption">会議室で誤請求の隠蔽が発覚。修平が責任を問われ、イヤホンを外そうとする。</p>
+        <p class="narration">問題が表に出たとき、修平はようやくイヤホンを外そうとした。だが、聞かなかった時間は戻らない。聞くべきだった声を拾わなかった責任だけが、冷たい会議室に残された。</p>
+        <span class="product">聞き流すイヤホン</span>
+        <p class="quote">上司: 「君は顧客の話を聞いていたのか」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene turning-point" id="cut-17">
+      <img src="001_10分版_絵コンテ画像/cut17_divorce_papers_home.png" alt="美香が離婚届と病院の封筒を置き修平が耳を押さえる" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 17</span><span class="duration">25秒</span></div>
+        <h2 class="scene-title">本当に聞くべき声</h2>
+        <p class="caption">自宅。美香が離婚届を置く。机には病院の封筒。修平は耳を押さえる。</p>
+        <p class="narration">家に戻ると、美香は静かに書類を置いた。怒鳴り声ではなかった。責める声でもなかった。ただ、助けてほしいという小さな声だった。修平が一番聞くべきだった声は、ずっと家の中にあった。</p>
+        <span class="product">聞き流すイヤホン</span>
+        <p class="quote">美香: 「本当は、あなたに助けてほしかっただけなの」</p>
+      </figcaption>
+    </figure>
+
+    <figure class="scene turning-point" id="cut-18">
+      <img src="001_10分版_絵コンテ画像/cut18_empty_alley_ending.png" alt="空っぽの駅裏路地に修平だけが立ち尽くす" loading="lazy">
+      <figcaption>
+        <div class="scene-meta"><span class="cut-number">CUT 18</span><span class="duration">25秒</span></div>
+        <h2 class="scene-title">高いか安いか</h2>
+        <p class="caption">空っぽの駅裏路地。修平だけが立ち尽くし、耳元のイヤホンが青白く光る。老婆の姿はない。</p>
+        <p class="narration">修平は老婆を探して路地へ向かった。だが露店は跡形もなく、青白い光だけが耳元に残っている。五万円で買ったものは、静けさではなかった。自分に向けられた大切な声を失う権利だった。</p>
+        <span class="product">聞き流すイヤホン</span>
+        <p class="quote">老婆の声: 「高いか安いかは、お客様のお考え次第でございます」</p>
+      </figcaption>
+    </figure>
+
+    <section class="ending" aria-label="読後メッセージ">
+      <strong>聞き流したものは、戻ってこない。</strong>
+      <p>嫌な声を消す道具は、必要な声まで静かに奪っていった。</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>制作素材: 001 本番制作パッケージ 10分版 / 絵コンテ画像18枚 / アイキャッチ画像</p>
+  </footer>
+</body>
+</html>
