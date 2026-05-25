@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>うすい社員証 | WEB漫画版</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b0f;
+      --panel: #151a1f;
+      --panel-2: #1b2027;
+      --ink: #f6f3ed;
+      --muted: #b9b3a8;
+      --line: rgba(236, 226, 206, 0.16);
+      --blue: #9fe8ff;
+      --gold: #e8c06d;
+      --danger: #ff8f70;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(159, 232, 255, 0.14), transparent 32rem),
+        linear-gradient(180deg, #101016 0%, var(--bg) 34rem, #07080a 100%);
+      color: var(--ink);
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .hero {
+      min-height: 96svh;
+      display: grid;
+      align-items: end;
+      background-image:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.2) 54%, rgba(0, 0, 0, 0.76)),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(9, 11, 15, 0.94)),
+        url("002_10分版_絵コンテ画像_軽量版/eyecatch_youtube_thumbnail_16x9.jpg");
+      background-size: cover;
+      background-position: center;
+      padding: clamp(22px, 4vw, 58px);
+    }
+
+    .hero-copy {
+      max-width: 820px;
+      padding-bottom: 8vh;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-size: clamp(0.8rem, 1.6vw, 0.96rem);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 2px;
+      background: var(--blue);
+      box-shadow: 0 0 18px rgba(159, 232, 255, 0.8);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.7rem, 9vw, 7rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-shadow: 0 6px 28px rgba(0, 0, 0, 0.85);
+    }
+
+    .tagline {
+      max-width: 38rem;
+      margin: 22px 0 0;
+      color: #fffaf0;
+      font-size: clamp(1.02rem, 2vw, 1.34rem);
+      font-weight: 700;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border: 1px solid rgba(159, 232, 255, 0.45);
+      border-radius: 8px;
+      background: rgba(10, 14, 18, 0.72);
+      color: var(--ink);
+      font-weight: 800;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, #f9f0dc, #9fe8ff);
+      color: #071018;
+      box-shadow: 0 14px 44px rgba(159, 232, 255, 0.2);
+    }
+
+    .intro {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 42px clamp(18px, 4vw, 42px) 22px;
+      color: var(--muted);
+    }
+
+    .intro strong {
+      color: var(--ink);
+    }
+
+    .chapter-nav {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px clamp(14px, 4vw, 32px);
+      border-block: 1px solid var(--line);
+      background: rgba(8, 9, 12, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .chapter-nav a {
+      flex: 0 0 auto;
+      min-width: 42px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .chapter-nav a:hover,
+    .chapter-nav a:focus-visible {
+      color: var(--ink);
+      border-color: rgba(159, 232, 255, 0.8);
+      outline: none;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px clamp(12px, 4vw, 34px) 74px;
+    }
+
+    .scene {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+      margin: 0 0 clamp(28px, 6vw, 56px);
+      padding: clamp(12px, 2vw, 18px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(27, 32, 39, 0.98), rgba(12, 14, 18, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .scene.turning {
+      border-color: rgba(255, 143, 112, 0.4);
+      background: linear-gradient(180deg, rgba(39, 29, 25, 0.98), rgba(12, 14, 18, 0.98));
+    }
+
+    .scene img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #0e1116;
+    }
+
+    .scene figcaption {
+      display: grid;
+      gap: 12px;
+    }
+
+    .scene-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .cut-number {
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .duration {
+      padding: 2px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #e7ded1;
+    }
+
+    .scene-title {
+      margin: 0;
+      font-size: clamp(1.1rem, 2.2vw, 1.65rem);
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .caption,
+    .narration {
+      margin: 0;
+    }
+
+    .caption {
+      color: #e7dfd3;
+    }
+
+    .narration {
+      color: #cfc7ba;
+    }
+
+    .quote {
+      margin: 0;
+      padding: 12px 14px;
+      border-left: 3px solid var(--blue);
+      background: rgba(159, 232, 255, 0.08);
+      color: #fdf9ef;
+      font-weight: 800;
+    }
+
+    .turning .quote {
+      border-left-color: var(--danger);
+      background: rgba(255, 143, 112, 0.1);
+    }
+
+    .script-details {
+      border: 1px solid rgba(236, 226, 206, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.025);
+      overflow: hidden;
+    }
+
+    .script-details summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 44px;
+      padding: 10px 14px;
+      color: var(--blue);
+      cursor: pointer;
+      font-weight: 900;
+      list-style: none;
+      user-select: none;
+    }
+
+    .script-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .script-details summary::after {
+      content: "+";
+      display: inline-grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      border: 1px solid rgba(159, 232, 255, 0.35);
+      border-radius: 999px;
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .script-details[open] summary::after {
+      content: "-";
+    }
+
+    .script-block {
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+      border-top: 1px solid rgba(236, 226, 206, 0.12);
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .script-heading {
+      margin: 0;
+      color: var(--blue);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .script-block p {
+      margin: 0;
+      color: #d9d0c2;
+    }
+
+    .dialogue-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .dialogue-list li {
+      padding: 8px 10px;
+      border-left: 3px solid rgba(232, 192, 109, 0.8);
+      background: rgba(232, 192, 109, 0.08);
+      color: #fff7e7;
+      font-weight: 800;
+    }
+
+    .product {
+      display: inline-flex;
+      width: fit-content;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(232, 192, 109, 0.14);
+      color: var(--gold);
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .ending {
+      margin-top: 8px;
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid rgba(159, 232, 255, 0.22);
+      border-radius: 8px;
+      background: #0b0e12;
+      text-align: center;
+    }
+
+    .ending strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--ink);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    .ending p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 28px clamp(18px, 4vw, 42px) 48px;
+      color: #8f897d;
+      text-align: center;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (min-width: 860px) {
+      .scene {
+        grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+        align-items: center;
+      }
+
+      .scene:nth-of-type(even) img {
+        order: 2;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero {
+        min-height: 86svh;
+        padding: 18px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      main {
+        padding-inline: 10px;
+      }
+
+      .scene {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">不思議な商品シリーズ WEB漫画</p>
+      <h1>うすい社員証</h1>
+      <p class="tagline">責任を薄くしたかった男は、最後に自分の存在まで薄くしてしまう。</p>
+      <div class="actions">
+        <a class="button primary" href="#comic">漫画を読む</a>
+        <a class="button" href="#cut-14">社員証の登場へ</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="intro" aria-label="作品紹介">
+    <p><strong>「うすい手帳」「うすいアルバム」「うすい社員証」</strong>の3商品を、18枚の絵コンテ画像で読めるWEB漫画版にしました。責任から逃げるたびに人間関係が軽くなり、最後には誰の記憶にも残らなくなる皮肉寄りの物語です。</p>
+  </section>
+
+  <nav class="chapter-nav" aria-label="カット移動" id="chapter-nav"></nav>
+
+  <main id="comic"></main>
+
+  <footer>
+    <p>制作素材: 002 本番制作パッケージ / 10分版絵コンテ画像18枚 / 軽量版JPEG</p>
+  </footer>
+
+  <script>
+    const scenes = [
+      {
+        img: "cut01_sales_office_calls.jpg",
+        alt: "営業フロアで原田が笑顔で電話をし、書類と連絡が山積みになっている",
+        duration: "30秒",
+        title: "責任を取る男",
+        caption: "営業フロアで原田が笑顔で電話をし、未返信の連絡や書類が周囲に積み上がっている。",
+        narration: "原田誠一、四十三歳。住宅設備会社の営業部長。彼の得意技は、相手を安心させる言葉だった。私が責任を持ちます。その一言で、原田は何件もの契約を取ってきた。",
+        quote: "原田: 「大丈夫です、そこは私が責任を持ちますから」"
+      },
+      {
+        img: "cut02_meeting_warning.jpg",
+        alt: "三島が工事説明の不安を伝えるが原田が軽く受け流す",
+        duration: "35秒",
+        title: "細かい話",
+        caption: "小会議室。部下の三島が工事説明の不安を伝えるが、原田は椅子にもたれて軽く受け流す。",
+        narration: "約束を取ることと、約束を守ることは違う。三島は追加費用の説明不足を心配したが、原田にとってそれは契約前に客を不安にさせるだけの細かい話だった。",
+        quote: "三島: 「追加費用のところをもう一度確認した方が」 原田: 「細かい話は現場で調整して」"
+      },
+      {
+        img: "cut03_home_dining_family.jpg",
+        alt: "夜の食卓で妻と娘が発表会の話をするが原田は手帳とスマホを見ている",
+        duration: "30秒",
+        title: "行けたら行く",
+        caption: "夜の自宅。妻と娘が発表会の予定を話すが、原田は手帳とスマホから目を離さない。",
+        narration: "家庭でも、原田は同じ調子だった。妻の由紀との約束も、娘の里奈の学校行事も、仕事が落ち着いたらという薄い返事で先へ送られていく。",
+        quote: "由紀: 「今度こそ来られる？」 原田: 「行けたら行くよ」"
+      },
+      {
+        img: "cut04_crowded_planner_train.jpg",
+        alt: "深夜の電車で原田が予定だらけの手帳を見つめている",
+        duration: "30秒",
+        title: "重すぎる予定",
+        caption: "深夜の電車。原田の手帳は予定で黒く埋まり、本人はうんざりした顔で見つめている。",
+        narration: "顧客の修理依頼、部下の相談、妻との約束、娘の発表会。すべてが原田には重く感じられた。彼は手帳を閉じ、心の中でつぶやく。",
+        quote: "原田の心の声: 「もっと薄い付き合いで、うまくやれればいいのにな」"
+      },
+      {
+        img: "cut05_obaasan_planner_stall.jpg",
+        alt: "駅前裏路地で老婆がうすい手帳を差し出す",
+        duration: "35秒",
+        title: "うすい手帳",
+        caption: "再開発中の駅前裏路地。老婆の露店が現れ、青白く光る薄い手帳を差し出す。",
+        narration: "取り壊し寸前の細い路地に、見慣れない露店があった。店番をしていたのは、静かな笑みを浮かべた老婆。布の上には、手のひらほど薄い手帳が一冊だけ置かれていた。",
+        product: "うすい手帳 / 五千円",
+        quote: "老婆: 「うすい手帳でございます」"
+      },
+      {
+        img: "cut06_planner_fading_schedule.jpg",
+        alt: "会社のデスクでうすい手帳の予定が薄くにじんでいく",
+        duration: "35秒",
+        title: "予定の重さが薄くなる",
+        caption: "翌朝、手帳の予定が薄くにじみ、重い用件が軽い用件へ変わっていく。",
+        narration: "翌朝、その手帳は原田の予定を変えた。正確には、予定の重さを変えたのだ。どうしても行かなければならないはずの用件が、後でもよい用件に見えてくる。",
+        product: "うすい手帳",
+        quote: "N: 予定の重さが、薄くなっていった。"
+      },
+      {
+        img: "cut07_postpone_subordinate.jpg",
+        alt: "原田がうすい手帳を持ちながら部下の相談を先送りにする",
+        duration: "30秒",
+        title: "楽になる毎日",
+        caption: "営業フロア。原田は余裕の顔で、部下の相談を来週へ先送りにする。",
+        narration: "手帳のおかげで、原田の毎日は軽くなった。顧客は強く怒らず、部下は深く追及せず、原田はそれを物事がうまく収まっている証拠だと思った。",
+        product: "うすい手帳",
+        quote: "原田: 「急ぎじゃないだろう。来週にしよう」"
+      },
+      {
+        img: "cut08_obaasan_album_stall.jpg",
+        alt: "老婆がうすいアルバムを原田に差し出す",
+        duration: "35秒",
+        title: "うすいアルバム",
+        caption: "二度目の露店。老婆が小さなアルバムを差し出す。原田はもう疑わない。",
+        narration: "そんな原田の前に、老婆は二度目に現れた。今度の商品は、小さなアルバム。原田は、それも自分を楽にしてくれるものだと信じていた。",
+        product: "うすいアルバム",
+        quote: "老婆: 「うすいアルバムでございます」"
+      },
+      {
+        img: "cut09_album_fading_relations.jpg",
+        alt: "原田が写真をうすいアルバムに入れ、相手の輪郭が薄くなる",
+        duration: "35秒",
+        title: "怒りだけではない",
+        caption: "原田が顧客写真と部下の集合写真をアルバムに入れると、相手の怒りや不信感が薄まる。",
+        narration: "アルバムに写真を入れると、写真に写る相手とのわだかまりが薄くなった。ただし、薄くなるのは怒りだけではない。期待も、信頼も、思い出も、同じように薄くなる。",
+        product: "うすいアルバム",
+        quote: "N: 薄くなるのは怒りだけではなかった。"
+      },
+      {
+        img: "cut10_family_photo_hesitation.jpg",
+        alt: "原田が家族写真をうすいアルバムへ入れる直前にためらう",
+        duration: "30秒",
+        title: "最後のためらい",
+        caption: "家族写真をアルバムへ入れる直前、原田は一瞬だけ手を止める。",
+        narration: "家族写真を入れる時だけ、原田は少しためらった。だが、妻の冷たい視線や娘の失望した顔を思い出すと、そのためらいも薄れていった。",
+        product: "うすいアルバム",
+        quote: "N: 原田は一瞬だけ、手を止めた。"
+      },
+      {
+        img: "cut11_family_distance_dining.jpg",
+        alt: "食卓で妻と娘が原田に期待しない顔をしている",
+        duration: "30秒",
+        title: "静かになった家",
+        caption: "家庭の空気が静かになる。妻と娘は原田を責めず、ただ期待しない顔になる。",
+        narration: "その夜から、家の中は静かになった。妻は原田に期待しなくなり、娘は原田を責めなくなった。原田はそれを、家庭が落ち着いたのだと受け取った。",
+        product: "うすいアルバム",
+        quote: "N: 家の中は静かになった。原田はそれを、落ち着いたと思った。"
+      },
+      {
+        img: "cut12_renovation_leak.jpg",
+        alt: "リフォーム現場で水漏れが発覚し顧客が原田を責める",
+        duration: "35秒",
+        title: "薄くできない問題",
+        caption: "坂井宅のリフォーム現場。壁の中のずさんな施工と水漏れが発覚する。",
+        narration: "だが、薄くしても消えないものがあった。原田が契約を取った高額リフォーム工事で、説明不足と手抜き施工が発覚したのだ。",
+        quote: "坂井: 「あなたが責任を持つと言ったんですよ」",
+        turning: true
+      },
+      {
+        img: "cut13_meeting_confrontation.jpg",
+        alt: "会社の会議室で原田が顧客と上司と部下に責められる",
+        duration: "35秒",
+        title: "責任者は誰だ",
+        caption: "会議室で、顧客、部下、上司の視線が原田に集中する。",
+        narration: "追加費用の説明は不十分。工期を急がせたのも原田。現場に無理を言ったのも原田。今度ばかりは、誰も軽く流してはくれなかった。",
+        quote: "支店長: 「原田くん、説明してもらおう」",
+        turning: true
+      },
+      {
+        img: "cut14_obaasan_employee_badge_stall.jpg",
+        alt: "老婆が青白く光るうすい社員証を原田に差し出す",
+        duration: "35秒",
+        title: "うすい社員証",
+        caption: "三度目の露店。老婆が透明な薄い社員証を差し出す。原田の顔は影に沈んでいる。",
+        narration: "逃げ場を失った原田は、あの路地へ向かった。そこで老婆が差し出したのは、名札ほどの薄い社員証だった。原田は、それを責任を薄くする道具だと勝手に解釈した。",
+        product: "うすい社員証 / 十万円",
+        quote: "老婆: 「うすい社員証でございます」 原田: 「買います」",
+        turning: true
+      },
+      {
+        img: "cut15_employee_badge_fading.jpg",
+        alt: "社員証をつけた原田が会議室で半透明になり周囲が焦点を合わせられない",
+        duration: "35秒",
+        title: "責任の輪郭",
+        caption: "社員証をつけた原田を見る人々の焦点が合わず、責任者欄も薄くなる。",
+        narration: "効果はすぐに現れた。坂井は原田の顔を見ても、怒りをどこへ向ければいいのか分からない。三島は証言しようとして、肝心の名前を思い出せない。",
+        product: "うすい社員証",
+        quote: "N: 責任の輪郭が、原田から離れていった。",
+        turning: true
+      },
+      {
+        img: "cut16_reception_gate_stranger.jpg",
+        alt: "会社の受付ゲートで原田が外部の人間扱いされる",
+        duration: "35秒",
+        title: "外部の方ですか",
+        caption: "受付ゲートが反応せず、原田は会社の人間として認識されなくなる。",
+        narration: "原田は助かったと思った。しかし、薄くなっていたのは責任だけではなかった。挨拶されない。席がない。社員証をかざしても、ゲートが開かない。",
+        product: "うすい社員証",
+        quote: "受付: 「外部の方ですか」 原田: 「私はここの営業部長だ」",
+        turning: true
+      },
+      {
+        img: "cut17_family_forgets_harada.jpg",
+        alt: "自宅玄関で妻と娘が原田を知らない人のように見ている",
+        duration: "40秒",
+        title: "この人だれ",
+        caption: "自宅玄関。妻と娘は、原田を知らない人のように見る。家族写真の父親だけが白く抜けている。",
+        narration: "家に帰ると、妻は夫を見る目ではなく、知らない人を見る目で原田を見つめた。娘は母親の後ろに隠れ、小さく尋ねた。",
+        product: "うすい社員証",
+        quote: "里奈: 「お母さん、この人だれ」",
+        turning: true
+      },
+      {
+        img: "cut18_empty_alley_ending.jpg",
+        alt: "空っぽの路地で原田が叫ぶが誰も振り返らない",
+        duration: "40秒",
+        title: "誰にも責められない",
+        caption: "空っぽの路地で原田が叫ぶが、通行人は誰も振り返らない。胸の社員証だけが青白く光る。",
+        narration: "原田は、望み通り責任から解放された。ただし、責任の薄い人生は、存在もまた薄くなる。誰からも責められないということは、誰にも覚えられていないということだった。",
+        product: "うすい社員証",
+        quote: "老婆の声: 「高いか安いかは、お客様のお考え次第でございます」",
+        turning: true
+      }
+    ];
+
+    const scriptBlocks = [
+      {
+        body: [
+          "原田誠一、四十三歳。住宅設備会社の営業部長。",
+          "彼の得意技は、相手を安心させる言葉だった。",
+          "「私が責任を持ちます」「必ず後で対応します」。その言葉で、原田は何件もの契約を取ってきた。",
+          "だが、約束を守ることは、約束を取ることよりずっと面倒だった。"
+        ],
+        dialogue: [
+          "原田: 「大丈夫です、そこは私が責任を持ちますから」"
+        ]
+      },
+      {
+        body: [
+          "会議室で部下の三島が、不安そうに資料を差し出した。",
+          "追加費用の説明、工期の無理、現場への指示。どれも小さな見落としでは済まない話だった。",
+          "けれど原田は、相手を不安にさせないことこそ営業だと信じている。面倒な確認は、いつも後回しだった。"
+        ],
+        dialogue: [
+          "三島: 「部長、この工事説明、追加費用のところをもう一度確認した方が」",
+          "原田: 「細かい話は現場で調整して。お客さんを不安にさせないのが営業だよ」"
+        ]
+      },
+      {
+        body: [
+          "夜の自宅。妻の由紀は予定表を持ち、娘の里奈は黙って制服の袖を握っていた。",
+          "里奈の発表会は、以前から何度も話していた約束だった。",
+          "顧客の修理依頼、部下の相談、妻との約束、娘の学校行事。そのすべてが、原田には重く感じられた。"
+        ],
+        dialogue: [
+          "由紀: 「土曜、里奈の発表会よ。今度こそ来られる？」",
+          "原田: 「分かってる。行けたら行くよ」",
+          "里奈: 「行けたら、じゃなくて」"
+        ]
+      },
+      {
+        body: [
+          "深夜の電車で、原田は予定で黒く埋まった手帳を開いた。",
+          "顧客、部下、上司、妻、娘。ページの上に並ぶ名前は、どれも原田に責任を求めているように見えた。",
+          "原田は手帳を閉じる。彼が欲しかったのは、誰とも切れない関係ではなく、責められない程度に薄いつながりだった。"
+        ],
+        dialogue: [
+          "原田の心の声: 「もっと薄い付き合いで、うまくやれればいいのにな」"
+        ]
+      },
+      {
+        body: [
+          "その夜、原田は駅前の近道を通った。",
+          "取り壊し寸前の細い路地に、見慣れない露店があった。",
+          "店番をしていたのは、静かな笑みを浮かべた老婆。布の上には、手のひらほど薄い手帳が一冊だけ置かれていた。",
+          "原田が効能を尋ねても、老婆は商品名以上のことを語らない。"
+        ],
+        dialogue: [
+          "老婆: 「うすい手帳でございます」",
+          "原田: 「薄いって、ただの手帳でしょ」",
+          "老婆: 「それは、お買いになった方だけが解るのでございます」",
+          "原田: 「五千円？ 手帳にしては高いな」",
+          "老婆: 「高いか安いかは、お客様のお考え次第でございます」"
+        ]
+      },
+      {
+        body: [
+          "翌朝、その手帳は原田の予定を変えた。",
+          "正確には、予定の重さを変えたのだ。",
+          "どうしても行かなければならないはずの用件が、いつの間にか「後でもよい用件」に見えてくる。",
+          "部下との面談、客先への謝罪訪問、娘の発表会。ページの文字は薄くにじみ、原田の都合に合わせて軽くなっていった。"
+        ],
+        dialogue: [
+          "N: 予定の重さが、薄くなっていった。"
+        ]
+      },
+      {
+        body: [
+          "手帳のおかげで、原田の毎日は軽くなった。",
+          "顧客は強く怒らず、部下は深く追及せず、上司には余裕のある管理職に見える。",
+          "原田は、都合の悪い予定が薄くなることを、仕事がうまく回り始めた証拠だと思った。"
+        ],
+        dialogue: [
+          "三島: 「部長、昨日の相談なんですが」",
+          "原田: 「ああ、それ、急ぎじゃないだろう。来週にしよう」",
+          "坂井: 「今日、来てくれる約束でしたよね」",
+          "原田: 「まずは電話で状況を整理しましょう。その方がお互い楽です」"
+        ]
+      },
+      {
+        body: [
+          "原田の前に、老婆は二度目に現れた。",
+          "今度の商品は、小さなアルバム。",
+          "手帳で予定が軽くなった経験がある原田は、もう老婆の商品を疑わなかった。むしろ、今度はどんな面倒を軽くしてくれるのかと期待していた。"
+        ],
+        dialogue: [
+          "老婆: 「うすいアルバムでございます」",
+          "原田: 「これも、楽にしてくれるんですか」",
+          "老婆: 「商品をどう使うかは、お客様のお考え次第でございます」"
+        ]
+      },
+      {
+        body: [
+          "アルバムに写真を入れると、写真に写る相手とのわだかまりが薄くなった。",
+          "顧客との記念写真を入れれば、顧客の怒りが弱まる。部下との集合写真を入れれば、部下たちの不信感も言葉にならなくなる。",
+          "ただし、薄くなるのは怒りだけではない。期待も、信頼も、思い出も、同じように薄くなる。"
+        ],
+        dialogue: [
+          "支店長: 「原田くん、最近トラブル処理が早いな」",
+          "原田: 「相手を熱くさせないのがコツですよ」"
+        ]
+      },
+      {
+        body: [
+          "家族写真を入れる時だけ、原田は少しためらった。",
+          "妻の由紀も、娘の里奈も、原田に何かを期待していた。だからこそ、裏切られるたびに傷ついていた。",
+          "だが、冷たい視線や失望した顔を思い出すと、原田はその痛みからも逃げたくなった。"
+        ],
+        dialogue: [
+          "N: 原田は一瞬だけ、手を止めた。"
+        ]
+      },
+      {
+        body: [
+          "その夜から、家の中は静かになった。",
+          "妻は原田に期待しなくなり、娘は原田を責めなくなった。",
+          "本当なら、その静けさは危険な合図だった。けれど原田は、それを家庭が落ち着いたのだと都合よく受け取った。"
+        ],
+        dialogue: [
+          "由紀: 「あなた、里奈の発表会、また来なかったわね」",
+          "原田: 「仕事だったんだ。いつまでも責めなくてもいいだろう」",
+          "里奈: 「もう、いい」"
+        ]
+      },
+      {
+        body: [
+          "だが、薄くしても消えないものがあった。",
+          "原田が契約を取った高額リフォーム工事で、説明不足と手抜き施工が発覚したのだ。",
+          "壁の中の配管はずさんに処理され、水漏れが起きていた。追加費用の説明は不十分。工期を急がせたのも原田。現場に無理を言ったのも原田だった。"
+        ],
+        dialogue: [
+          "坂井: 「原田さん、あなたが責任を持つと言ったんですよ」"
+        ]
+      },
+      {
+        body: [
+          "会社の会議室で、顧客、部下、上司の視線が原田に集まった。",
+          "今度ばかりは、誰も軽く流してはくれなかった。",
+          "原田は説明を求められる。だが、彼が口にできたのは、自分がすべてを背負う言葉ではなく、責任の輪郭をぼかす言い訳だけだった。"
+        ],
+        dialogue: [
+          "三島: 「部長の指示でした。急がせていいから契約を落とすなって」",
+          "支店長: 「原田くん、説明してもらおう」",
+          "原田: 「私は、全体の調整をしただけで」"
+        ]
+      },
+      {
+        body: [
+          "逃げ場を失った原田は、あの路地へ向かった。",
+          "そこで老婆が差し出したのは、名札ほどの薄い社員証だった。",
+          "老婆は、会社での責任が薄くなるとは一言も言わない。けれど原田は、そういう意味だと勝手に思い込んだ。"
+        ],
+        dialogue: [
+          "老婆: 「うすい社員証でございます」",
+          "原田: 「社員証、ね。これをつければ、会社での責任も薄くなるんですか」",
+          "老婆: 「それは、お買いになった方だけが解るのでございます」",
+          "原田: 「いくらです」",
+          "老婆: 「十万円でございます」",
+          "原田: 「買います」"
+        ]
+      },
+      {
+        body: [
+          "翌日、原田は社員証を胸につけて出社した。",
+          "効果はすぐに現れた。",
+          "坂井は原田の顔を見ても、怒りをどこへ向ければいいのか分からなくなった。三島は証言しようとして、肝心の名前を思い出せない。",
+          "書類に残っていた責任者の欄も、インクが薄くなったように読めなくなっていく。"
+        ],
+        dialogue: [
+          "坂井: 「たしか、誰かが責任を持つって」",
+          "三島: 「ええと、あの、指示したのは、誰だったか」",
+          "支店長: 「責任者の名前が読めないな」",
+          "原田の心の声: 「助かった。これで責められずに済む」"
+        ]
+      },
+      {
+        body: [
+          "原田は助かったと思った。",
+          "しかし、薄くなっていたのは責任だけではなかった。",
+          "挨拶されない。席がない。内線が鳴らない。社員証をかざしても、ゲートが開かない。",
+          "会社の中で、原田誠一という人間そのものが薄くなっていた。"
+        ],
+        dialogue: [
+          "受付: 「すみません、外部の方ですか」",
+          "原田: 「外部？ 私はここの営業部長だ」",
+          "受付: 「確認が取れません」"
+        ]
+      },
+      {
+        body: [
+          "家に帰ると、妻は玄関の前で原田を見つめた。",
+          "それは夫を見る目ではなかった。",
+          "娘は母親の後ろに隠れ、小さく尋ねた。原田が家族写真を見せても、そこに写っていたはずの父親の部分だけが白く抜けていた。"
+        ],
+        dialogue: [
+          "由紀: 「どちら様ですか」",
+          "里奈: 「お母さん、この人だれ」",
+          "原田: 「何言ってるんだ。父さんだろ。里奈、ほら、この写真」",
+          "由紀: 「うちに、父親はいません」"
+        ]
+      },
+      {
+        body: [
+          "会社は、問題案件の責任者を特定できなかった。",
+          "原田は、誰からも責められなかった。その代わり、誰からも社員として扱われなくなった。",
+          "給与は振り込まれず、机は片づけられ、社内名簿から名前が消えた。",
+          "原田は、望み通り責任から解放された。ただし、責任の薄い人生は、存在もまた薄くなる。誰からも責められないということは、誰にも覚えられていないということだった。"
+        ],
+        dialogue: [
+          "原田: 「そんなはずない。私はここにいる。ここにいるんだ」",
+          "老婆の声: 「高いか安いかは、お客様のお考え次第でございます」",
+          "原田: 「戻してくれ。責任を取る。だから」"
+        ]
+      }
+    ];
+
+    const imageBase = "002_10分版_絵コンテ画像_軽量版/";
+    const nav = document.querySelector("#chapter-nav");
+    const comic = document.querySelector("#comic");
+
+    nav.innerHTML = scenes.map((_, index) => {
+      const cut = String(index + 1).padStart(2, "0");
+      return `<a href="#cut-${cut}">${index + 1}</a>`;
+    }).join("");
+
+    comic.innerHTML = scenes.map((scene, index) => {
+      const cut = String(index + 1).padStart(2, "0");
+      const script = scriptBlocks[index];
+      const scriptHtml = script ? `
+        <details class="script-details">
+          <summary>詳細な台詞・ナレーションを見る</summary>
+          <div class="script-block">
+            <p class="script-heading">本番ナレーション</p>
+            ${script.body.map((line) => `<p>${line}</p>`).join("")}
+            <p class="script-heading">台詞</p>
+            <ul class="dialogue-list">
+              ${script.dialogue.map((line) => `<li>${line}</li>`).join("")}
+            </ul>
+          </div>
+        </details>
+      ` : "";
+      return `
+        <figure class="scene${scene.turning ? " turning" : ""}" id="cut-${cut}">
+          <img src="${imageBase}${scene.img}" alt="${scene.alt}" loading="lazy">
+          <figcaption>
+            <div class="scene-meta"><span class="cut-number">CUT ${cut}</span><span class="duration">${scene.duration}</span></div>
+            <h2 class="scene-title">${scene.title}</h2>
+            <p class="caption">${scene.caption}</p>
+            <p class="narration">${scene.narration}</p>
+            ${scene.product ? `<span class="product">${scene.product}</span>` : ""}
+            <p class="quote">${scene.quote}</p>
+            ${scriptHtml}
+          </figcaption>
+        </figure>
+      `;
+    }).join("") + `
+      <section class="ending" aria-label="読後メッセージ">
+        <strong>責任の薄い人生は、存在もまた薄くなる。</strong>
+        <p>誰からも責められない代わりに、誰にも覚えられなくなった。</p>
+      </section>
+    `;
+  </script>
+</body>
+</html>

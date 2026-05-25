@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>週刊AIストーリーランド</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080a0d;
+      --panel: #151a1f;
+      --ink: #f7f4ee;
+      --muted: #b9b2a8;
+      --line: rgba(242, 232, 212, 0.16);
+      --blue: #9fe8ff;
+      --gold: #e8c06d;
+      --red: #ff8f70;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.48);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.2) 48%, rgba(0, 0, 0, 0.75)),
+        linear-gradient(180deg, rgba(8, 10, 13, 0.1), #080a0d 76%),
+        url("002_10分版_絵コンテ画像_軽量版/eyecatch_youtube_thumbnail_16x9.jpg");
+      background-size: cover;
+      background-position: center top;
+      background-attachment: fixed;
+      color: var(--ink);
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+      line-height: 1.75;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      min-height: 100svh;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(159, 232, 255, 0.16), transparent 30rem),
+        linear-gradient(180deg, rgba(8, 10, 13, 0.24), rgba(8, 10, 13, 0.98) 62%);
+    }
+
+    header {
+      display: grid;
+      align-items: end;
+      min-height: 62svh;
+      padding: clamp(24px, 5vw, 64px);
+    }
+
+    .hero-copy {
+      max-width: 920px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 14px;
+      color: var(--blue);
+      font-size: clamp(0.82rem, 1.5vw, 0.98rem);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 38px;
+      height: 2px;
+      background: var(--blue);
+      box-shadow: 0 0 18px rgba(159, 232, 255, 0.86);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.65rem, 8vw, 7.2rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+      text-shadow: 0 8px 34px rgba(0, 0, 0, 0.86);
+    }
+
+    .tagline {
+      max-width: 42rem;
+      margin: 22px 0 0;
+      color: #fff7e7;
+      font-size: clamp(1.02rem, 2vw, 1.35rem);
+      font-weight: 800;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.82);
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 clamp(16px, 4vw, 40px) 72px;
+    }
+
+    .episode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(18px, 3vw, 30px);
+    }
+
+    .episode-card {
+      display: grid;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(21, 26, 31, 0.96), rgba(9, 12, 16, 0.98));
+      box-shadow: var(--shadow);
+      text-decoration: none;
+    }
+
+    .episode-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #101419;
+    }
+
+    .episode-body {
+      display: grid;
+      gap: 12px;
+      padding: clamp(16px, 3vw, 24px);
+    }
+
+    .episode-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .episode-no {
+      color: var(--blue);
+    }
+
+    .tone {
+      padding: 2px 9px;
+      border: 1px solid rgba(232, 192, 109, 0.35);
+      border-radius: 999px;
+      color: var(--gold);
+    }
+
+    .episode-title {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      line-height: 1.28;
+      letter-spacing: 0;
+    }
+
+    .episode-text {
+      margin: 0;
+      color: #d8d0c4;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .products li {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(159, 232, 255, 0.1);
+      color: #dff8ff;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .read {
+      display: inline-flex;
+      width: fit-content;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 4px;
+      padding: 8px 15px;
+      border: 1px solid rgba(159, 232, 255, 0.42);
+      border-radius: 8px;
+      background: rgba(159, 232, 255, 0.1);
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .episode-card:hover,
+    .episode-card:focus-visible {
+      border-color: rgba(159, 232, 255, 0.72);
+      outline: none;
+      transform: translateY(-2px);
+      transition: transform 160ms ease, border-color 160ms ease;
+    }
+
+    footer {
+      padding: 30px clamp(18px, 4vw, 42px) 44px;
+      color: #8e887f;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      background: rgba(8, 10, 13, 0.92);
+    }
+
+    @media (max-width: 780px) {
+      body {
+        background-attachment: scroll;
+      }
+
+      header {
+        min-height: 54svh;
+        padding: 22px;
+      }
+
+      .episode-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="hero-copy">
+        <p class="eyebrow">不思議な商品シリーズ</p>
+        <h1>週刊AIストーリーランド</h1>
+        <p class="tagline">路地裏で売られる不思議な商品。便利さに手を伸ばした人間の欲と弱さが、静かに反転していく。</p>
+      </div>
+    </header>
+
+    <main aria-label="エピソード一覧">
+      <section class="episode-grid">
+        <a class="episode-card" href="001_web_manga.html">
+          <img src="001_10分版_絵コンテ画像_軽量版/eyecatch_youtube_thumbnail_16x9.jpg" alt="聞き流すイヤホンのキービジュアル">
+          <div class="episode-body">
+            <div class="episode-meta">
+              <span class="episode-no">EPISODE 001</span>
+              <span class="tone">皮肉</span>
+            </div>
+            <h2 class="episode-title">聞き流すイヤホン</h2>
+            <p class="episode-text">嫌な言葉だけを聞き流したはずだった。けれどイヤホンは、忠告も心配も助けを求める声も区別しなかった。</p>
+            <ul class="products" aria-label="登場商品">
+              <li>聞き流すノート</li>
+              <li>聞き流す枕</li>
+              <li>聞き流すイヤホン</li>
+            </ul>
+            <span class="read">この話を読む</span>
+          </div>
+        </a>
+
+        <a class="episode-card" href="002_web_manga.html">
+          <img src="002_10分版_絵コンテ画像_軽量版/eyecatch_youtube_thumbnail_16x9.jpg" alt="うすい社員証のキービジュアル">
+          <div class="episode-body">
+            <div class="episode-meta">
+              <span class="episode-no">EPISODE 002</span>
+              <span class="tone">皮肉</span>
+            </div>
+            <h2 class="episode-title">うすい社員証</h2>
+            <p class="episode-text">責任を薄くしたかった男は、予定、記憶、人間関係を軽くしていく。最後に薄くなったのは、自分の存在だった。</p>
+            <ul class="products" aria-label="登場商品">
+              <li>うすい手帳</li>
+              <li>うすいアルバム</li>
+              <li>うすい社員証</li>
+            </ul>
+            <span class="read">この話を読む</span>
+          </div>
+        </a>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <p>週刊AIストーリーランド / 不思議な商品シリーズ</p>
+  </footer>
+</body>
+</html>
